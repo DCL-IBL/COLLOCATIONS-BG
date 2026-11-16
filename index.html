@@ -1,1 +1,431 @@
-ДЕМО
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Справочник на колокациите в българския език с опора съществително име</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:wght@500;600&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f7;--panel:#fff;--ink:#1b2430;--muted:#5d6877;--line:#dde1e7;--accent:#1f5f8b;--accent-soft:#e3eef6;--warm:#fdf3d8;--serif:"Source Serif 4",Georgia,"Times New Roman",serif;--sans:"Source Sans 3","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans)}
+.wrap{max-width:1180px;margin:0 auto;padding:24px 16px 40px}
+h1{font:600 30px/1.2 var(--serif);margin:0 0 8px;text-wrap:balance}
+.lead{margin:0 0 16px;color:var(--muted);max-width:90ch}
+.lead a{color:var(--accent)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px;margin:0 0 16px}
+.search{display:grid;grid-template-columns:1fr 1fr auto;gap:12px 16px;align-items:end}
+.fld label{display:block;font-weight:600;font-size:14px;margin:0 0 4px}
+.fld small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+input[type=search]{width:100%;min-width:0;font:inherit;color:var(--ink);background:#fff;border:1px solid #b9c1cc;border-radius:6px;padding:9px 10px}
+input[type=search]:focus,.btn:focus-visible,input[type=checkbox]:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn{font:600 15px/1 var(--sans);border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:6px;padding:10px 14px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#184c70}
+.btn.sec{background:#fff;color:var(--accent)}
+.btn.sec:hover{background:var(--accent-soft)}
+.info-btn{padding:6px 10px;font-size:14px;margin-left:4px;vertical-align:1px}
+.info h2{font:600 22px/1.3 var(--serif);margin:0 0 4px}
+.info h3{font:600 17px/1.3 var(--serif);margin:18px 0 6px}
+.info p{margin:0 0 8px}
+.info ul{margin:0 0 8px;padding-left:22px}
+.info li{margin:2px 0}
+.info dl{margin:0 0 8px}
+.info dt{font-weight:600;margin-top:6px}
+.info dd{margin:0 0 4px}
+.info .close{margin-top:10px}
+.layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:16px;align-items:start}
+.filters{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding:16px}
+details.facet{border-top:1px solid var(--line);padding:10px 0 0;margin-top:12px}
+details.facet:first-of-type{border-top:0;margin-top:0;padding-top:0}
+details.facet summary{cursor:pointer;font:600 17px/1.3 var(--serif);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px}
+details.facet summary::-webkit-details-marker{display:none}
+details.facet summary::after{content:"▾";color:var(--muted);font:14px var(--sans)}
+details.facet[open] summary::after{content:"▴"}
+.facet .clear{font-size:13px;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;margin:6px 0 0}
+.opt{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:start;padding:5px 2px;cursor:pointer;border-radius:4px}
+.opt:hover{background:#f4f7fa}
+.opt input{margin:4px 0 0}
+.opt .nm{font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.opt .nm small{display:block;color:var(--muted);font-size:13px}
+.opt .n{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.opt.zero{opacity:.45}
+.bar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin:0 0 12px}
+.status{font-weight:600}
+.bar label.chk{font-size:15px;display:flex;gap:6px;align-items:center;cursor:pointer}
+.grp{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin:0 0 12px;overflow:hidden}
+.grp h3{margin:0;padding:10px 16px;background:#fafbfc;border-bottom:1px solid var(--line);font:600 20px/1.3 var(--serif);display:flex;align-items:baseline;gap:10px}
+.grp h3 .cnt{font:400 13px var(--sans);color:var(--muted)}
+.rows{list-style:none;margin:0;padding:0}
+.r{padding:9px 16px;border-top:1px solid #eef0f3}
+.r:first-child{border-top:0}
+.r .main{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.r .col{font-size:17px;font-weight:600}
+.r .col b{color:var(--accent)}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px}
+.tag{font-size:12.5px;line-height:1.3;padding:1px 8px;border-radius:10px;background:var(--accent-soft);color:#174a6e}
+.tag.rel{background:#eef0f3;color:#3b4654;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+.auto{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:4px;vertical-align:1px;white-space:nowrap}
+.en{color:var(--muted);font-style:italic;margin-top:1px}
+.ex-btn{font:inherit;font-size:14px;color:var(--accent);background:none;border:0;padding:2px 0 0;cursor:pointer;text-decoration:underline}
+.ex{display:none;margin:6px 0 0;padding:8px 10px;background:var(--warm);border-radius:6px;font-size:15px}
+.r.open .ex,.showex .ex{display:block}
+.ex mark{background:#f6d77a;color:inherit;padding:0 1px;border-radius:2px}
+.ex .src{display:block;color:var(--muted);font-size:12.5px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.more{display:block;margin:8px auto 0}
+.empty,.load{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:24px;text-align:center;color:var(--muted)}
+.load input{margin-top:12px}
+footer{margin-top:24px;color:var(--muted);font-size:14px}
+footer a{color:var(--accent)}
+.note{font-size:13.5px;color:var(--muted);margin:12px 0 0}
+@media(max-width:900px){
+ .layout{grid-template-columns:minmax(0,1fr)}
+ .filters{position:static;max-height:none}
+ .search{grid-template-columns:1fr}
+}
+@media(max-width:560px){h1{font-size:25px}.wrap{padding:16px 12px 32px}.panel{padding:16px}.r{padding:9px 12px}.grp h3{padding:10px 12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>Справочник на колокациите в българския език с опора съществително име</h1>
+<p class="lead">Колокация е статистически значима комбинация от думи (Саг и др. 2002) или по-просто казано: колокация е последователност или комбинация от думи, които се срещат заедно по-често от обичайното. Данните са в хранилището <a href="https://github.com/DCL-IBL/COLLOCATIONS-BG" target="_blank" rel="noopener noreferrer">DCL-IBL/COLLOCATIONS-BG</a> в GitHub. <button type="button" class="btn sec info-btn" id="infoBtn" aria-expanded="false" aria-controls="info">Повече информация</button></p>
+<section class="panel info" id="info" hidden aria-label="Информация за справочника">
+<h2>За справочника</h2>
+<h3>Какво е колокация</h3>
+<p>Колокация е статистически значима комбинация от думи (Саг и др. 2002) или по-просто казано: колокация е последователност или комбинация от думи, които се срещат заедно по-често от обичайното. В нашето разбиране колокация е статистически значима комбинация от думи, която не може да се класифицира като съставна дума или фразеологизъм, например фатална грешка. Колокациите могат да имат различна сила на свързаност, например съчетанието нова кола може да се определи с относително слаба свързаност, тъй като и нова, и кола могат да се комбинират с други думи. От друга страна, съчетанието оперетен театър илюстрира по-силна свързаност, защото е типично двете думи да се срещат заедно и всяка една от тях не се комбинира с много други думи. Колокациите се извличат от големи по обем корпуси, а силата на свързаност на колокацията се изчислява чрез алгоритми.</p>
+<h3>Как са извлечени и обработени колокациите</h3>
+<p>На базата на честотни речници на СКЛ, базирани на честотата на леми в учебници и учебни материали, са подбрани лексикални единици, принадлежащи към общоупотребимата лексика: 4 400 съществителни имена, 3 400 глагола и 1 700 прилагателни имена. За съществителните имена са извлечени автоматично колокациите от голям корпус с езикови данни (Българския национален корпус) чрез системата СкечЕнджин (SketchEngine) с помощта на поредица от заявки посредством API.</p>
+<p>Извлечените колокации са филтрирани по честота (над 5 срещания в корпуса) и систематизирани според синтактичната структура на словосъчетанието (съгласувано определение + съществително, съществително + несъгласувано определение, изрази със съчинително свързване). За всяко съчетание са извлечени срещания на съчетанието в корпусите в системата на СкечЕнджин.</p>
+<p>Създадена е инструкция за ръчен подбор на автоматично извлечените колокации и тяхното класифициране като същински колокации, съставни думи, термини и идиоматични изрази. Инструкцията съдържа и описание за изискванията към примерите, които илюстрират колокациите: както на семантично, така и на синтактично равнище. Създадена е подредба за групиране на избраните класификации по семантични критерии от гледна точка на тяхната визуализация онлайн.</p>
+<p>Извършен е ръчен подбор на автоматично извлечените колокации с основна лексикална единица съществително име въз основа на възприетата методология; направен е подбор на подходящи примери, онагледяващи употребата на потвърдените колокации; колокациите са класифицирани ръчно като групирани колокации, съставни думи, термини или идиоматични изрази и са групирани с оглед на бъдещата визуализация. В резултат на ръчния подбор първоначално извлечените автоматично колокации са редуцирани значително.</p>
+<p>Първоначалният ръчен подбор на колокации, тяхната класификация, групиране и илюстрацията им с подходящи примери е редактирана, в резултат на което броят на редактираните колокации е намален с около една трета спрямо предварително подбраните, също така около една трета от предварително избраните примери се отхвърлят и се изисква допълнителен подбор. Където е необходимо, колокациите се прекатегоризират и прегрупират.</p>
+<p>Автоматично са извлечени и преводни еквиваленти за селектираните колокации. Част от предложенията за преводни еквиваленти са проверени спрямо различни източници онлайн – преводни памети, Уикипедия и др.</p>
+<h3>Критерии за подбор</h3>
+<p>Подборът на колокациите от списъка с автоматично извлечени предложения за колокации съчетава корпусни показатели (честотност), езиков усет и съпоставка с утвърдени лексикографски източници (Oxford Collocations Dictionary, OZDIC, Булнет, РБЕ). Основни критерии за включване са:</p>
+<ul>
+<li><b>Честотност и нормативна употреба:</b> анализират се данните от корпусите и търсенията в реална езикова среда, като се съблюдава съчетанието да принадлежи към живия, всекидневен или професионален език.</li>
+<li><b>Степен на свързаност и идиоматичност:</b> предпочитат се съчетания с непредсказуема или частично ограничена съчетаемост (напр. неописуемо вълнение, несдържано вълнение, силно вълнение пред баналното голямо вълнение).</li>
+<li><b>Спецификатор спрямо физически свойства:</b> не се разглеждат като колокации свободните съчетания с качествени прилагателни за базови физически свойства (цвят, размер от типа на общо физическо описание), освен ако прилагателното не носи типична, системна характеристика (полирано злато, зъболекарско злато).</li>
+<li><b>Практическа стойност за изучаващи езика:</b> приоритет се дава на изрази, които подпомагат усвояването на естествена българска реч от чужденци.</li>
+</ul>
+<p>Решения по спорни и гранични случаи:</p>
+<ul>
+<li><b>Имена на институции и организации:</b> Изключват се от списъка (напр. БАН, държавни институции), тъй като представляват собствени имена, а не общолексикални колокации.</li>
+<li><b>Ограничаване на вариативността от един и същи тип:</b> Следва се моделът на авторитетните онлайн колокативни речници (Oxford/OZDIC). Включват се типологични или класификационни представители (напр. при азбука се избират латинска, кирилска, гръцка, арабска, руническа, фонетична, но се избягват специфични национални вариации като френска азбука, немска азбука). При близки синонимни варианти се подбира по-неутралният и системен (напр. годишен абонамент пред едногодишен абонамент). Броят на подбраните колокации с много близко значение обикновено се ограничава до 2.</li>
+<li><b>Фразеологизми:</b> маркират се като отделно подмножество (стойност 3). При тях значението е неделимо/непрозрачно и между компонентите не може да се вмъква друга пълнозначна дума. На текущия етап примери за тях не се обработват приоритетно.</li>
+<li><b>Форма на лемата:</b> за съчетания, които нормативно или узуализирано съществуват само/предимно в множествено число (напр. всевъзможни беди), лемата се въвежда в множествено число.</li>
+</ul>
+<h3>Конвенции за разграничаване</h3>
+<p>За разграничаване между съставни лексикални единици, съставни термини и колокации са възприети следните конвенции, които се базират на съществуващи дефиници:</p>
+<dl>
+<dt>Колокация</dt><dd>Лексикално съчетание от два или повече компонента, чиято съчетаемост е лексикално обусловена в по-голяма степен от тази при свободните словосъчетания и не представлява фразеологична единица или термин.</dd>
+<dt>Свободно словосъчетание</dt><dd>Лексикално съчетание от два или повече компонента, при което съчетаването произтича от съществуващите отношения между обозначаване явления в действителността.</dd>
+<dt>Съставна лексикална единица</dt><dd>Устойчиво лексикално съчетание от два или повече компонента, което назовава едно понятие, чието значение не може да бъде изведено непосредствено от значението на съставящите го единици.</dd>
+<dt>Терминологична съставна лексикална единица</dt><dd>Устойчиво лексикално съчетание от два или повече компонента, което назовава едно понятие от определена научна, техническа или професионална област.</dd>
+</dl>
+<h3>Групиране на колокациите</h3>
+<p>Тъй като представянето на изразите трябва да следва определен ред, беше възприета следната конвенция за групиране в зависимост от подчинените части:</p>
+<ul>
+<li><b>Качествени прилагателни:</b> Включват се и прилагателни, функциониращи в контекста като качествени, дори формално да не се степенуват (всеобщо внимание).</li>
+<li>Относителни прилагателни за изразяване на:
+<ul>
+<li><b>Принадлежност / субект:</b> отнасящи се до човек, институция или общество (обществено внимание, божия благодат).</li>
+<li><b>Материал / състав / субстанция:</b> произход или задвижваща сила (дъждовна вода, конски впряг).</li>
+<li><b>Функция и приложение:</b> разширява се до предназначение на обекта (странична врата, патрулен автомобил).</li>
+<li><b>Времеви и пространствени отношения:</b> (вековен враг, месечен абонамент; планински въздух, морска вода).</li>
+<li><b>Външни / системни белези:</b> структура или тип организация (съвместна акция, двуетажен автобус).</li>
+</ul></li>
+<li>Предложни и съчинителни съчетания, класифицирани по формални структурни признаци.</li>
+</ul>
+<h3>Примери</h3>
+<p>Примерите целят да дадат максимално ясна и естествена представа за значението и употребата на колокацията. Дефинирани са следните изисквания:</p>
+<ul>
+<li><b>Структура и дължина:</b> Предпочитат се кратки до средни по дължина, синтактично ясни изречения (предимно прости или неусложнени сложни).</li>
+<li><b>Позиция на колокацията:</b> Препоръчва се колокацията да бъде разположена в началото на изречението (възможно най-напред).</li>
+<li><b>Информативност и дефиниращ контекст:</b> Изречението трябва да илюстрира функцията, свойствата или типичната ситуация на употреба, без да звучи изкуствено или като речникова дефиниция.</li>
+<li><b>Неутралност на контекста.</b> В избраните примери не трябва да има:
+<ul>
+<li>злободневни, политически ангажирани или спорни религиозни сюжети;</li>
+<li>споменаване на реално съществуващи съвременни личности;</li>
+<li>исторически или обществени оценки.</li>
+</ul></li>
+<li><b>Езикова достъпност:</b> Избягват се непознати собствени имена, малко известни географски обекти и неясни анафорични препратки (като изолирани показателни или лични местоимения без ясен референт в изречението).</li>
+</ul>
+<h3>Преводни съответствия</h3>
+<p>Възприети основни конвенции за преводните съответствия (на английски език) са, както следва:</p>
+<ul>
+<li><b>Британски срещу американски английски:</b> При наличие на утвърдени лексикални различия (fire engine / fire truck) се посочват двата варианта с подходящо маркиране за вариант на езика.</li>
+<li><b>Еквивалентност и синонимия:</b> Предпочита се най-близкото и системно съответствие. Когато съществува както буквален превод, така и широко разпространено алтернативно или съкратено название (напр. банков автомат → cash machine, ATM), се избира доминиращият по употреба израз, придружен от абревиатурата, ако тя е основно комуникативно средство.</li>
+<li><b>Многозначност и полисемия в изходния език:</b> Когато българското съчетание е семантично широко или двусмислено (напр. санитарна кола), се прави предварителна контекстна диференциация, за да не се смесват различни концептуални преводи.</li>
+</ul>
+<h3>Резултат</h3>
+<p>Приложени са допълнителни процедури за обработка и филтриране на данните, за да се получи фокусиран и консистентен ресурс от колокации с основна дума съществително име с пряко приложение в обучението по български език като чужд. За целта бяха направени проверки на подбраните лексикални единици и колокации спрямо вече налични чуждоезикови лексикални минимуми за италиански и за английски език за ниво B2, както и ресурс с колокации за английски. В резултат колокациите са редуцирани до 17 184 колокации за 1304 основни думи. Те са снабдени с пример за употреба (с изключение на 272 колокации, за които не е подбран подходящ пример), с превод на английски език и със семантичен тип (с покритие 78,3%; за останалите не е било възможно причисляване към типовете). Колокациите, състоящи се от прилагателно и съществително, са 6591, с предложна група 991 и съчинителни конструкции 299.</p>
+<button type="button" class="btn sec close" id="infoClose">Скрий информацията</button>
+</section>
+</header>
+
+<form class="panel search" id="searchForm" role="search" autocomplete="off">
+<div class="fld"><label for="qHead">Основна дума</label><input type="search" id="qHead" placeholder="напр. абонамент" spellcheck="false"><small>Търси се по началото на думата. Можете да въведете няколко думи, разделени с интервал.</small></div>
+<div class="fld"><label for="qComp">Други компоненти</label><input type="search" id="qComp" placeholder="напр. годишен или за вестник" spellcheck="false"><small>Показват се колокациите, в които има думи, започващи с всяка от въведените.</small></div>
+<div class="fld"><button type="button" class="btn sec" id="reset">Изчисти</button></div>
+</form>
+
+<div class="layout">
+<aside class="panel filters" aria-label="Филтри">
+<details class="facet" open id="fRel"><summary>Синтактична връзка</summary><div class="list" id="relList"></div><button type="button" class="clear" data-clear="rel">Изчисти избора</button></details>
+<details class="facet" open id="fSem"><summary>Семантичен тип</summary><div class="list" id="semList"></div><button type="button" class="clear" data-clear="sem">Изчисти избора</button></details>
+<p class="note">Знакът „авт.“ до тип или превод означава, че е определен автоматично. Цифрите до филтрите показват броя колокации при текущото търсене.</p>
+</aside>
+
+<main>
+<div class="bar"><div class="status" id="status" aria-live="polite">Зареждане на данните…</div>
+<label class="chk"><input type="checkbox" id="allEx"> Всички примери</label></div>
+<div id="results"><div class="load" id="loadBox">Зареждане на данните…</div></div>
+</main>
+</div>
+
+<footer>
+<span>Данни: <a href="https://github.com/DCL-IBL/COLLOCATIONS-BG" target="_blank" rel="noopener noreferrer">DCL-IBL/COLLOCATIONS-BG</a>, версия 1.0</span>
+</footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+var DATA_URL='noun_collocations_v1.0_mainwords.tsv';
+var PAGE=40;
+var collator=new Intl.Collator('bg');
+var rows=[],view=[],relKeys=[],semKeys=[];
+var st={head:'',comp:'',rel:{},sem:{},shown:PAGE};
+var $=function(id){return document.getElementById(id)};
+
+function norm(s){return String(s||'').toLowerCase().replace(/[̀́]/g,'').replace(/ѐ/g,'е').replace(/ѝ/g,'и')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function clean(t){return t.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,'')}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function relGloss(r){
+ if(!r)return 'връзката не е означена';
+ if(r==='modifies')return 'прилагателно определение';
+ if(r==='and/or')return 'съчинителна връзка';
+ var m=/^pp_(.+)$/.exec(r);
+ if(m)return 'предложна група с „'+m[1]+'“';
+ return '';
+}
+
+function init(text){
+ var lines=text.replace(/^﻿/,'').split(/\r\n|\n/);
+ var h=lines[0].split('\t');
+ if(h.length<14||h[3]!=='Head'||h[4]!=='Collocation'||h[5]!=='Relation'){showError('Файлът с данни има неочакван формат.');return}
+ var out=[],relCnt={},semCnt={},semCode={};
+ for(var i=1;i<lines.length;i++){
+  var l=lines[i];
+  if(!l)continue;
+  var f=l.split('\t');
+  if(f.length<6||!f[3]||!f[4])continue;
+  var head=f[3].trim(),col=f[4].trim();
+  var hn=norm(head),toks=col.split(/\s+/);
+  var tn=toks.map(function(t){return norm(clean(t))});
+  var stem=hn.length>=4?hn.slice(0,hn.length-1):hn,hi=tn.indexOf(hn);
+  if(hi<0)for(var k=0;k<tn.length;k++)if(tn[k].indexOf(stem)===0){hi=k;break}
+  var partners=tn.filter(function(t,k){return t&&k!==hi});
+  /* column I: semantic type label(s); several labels are separated by " / "; "(?)" marks an uncertain assignment */
+  var labelText=(f[8]||'').trim(),unsure=/\(\?\)/.test(labelText),labs=[];
+  labelText.split(' / ').forEach(function(x){
+   x=x.replace(/\s*\(\?\)\s*$/,'').trim();
+   if(x&&labs.indexOf(x)<0)labs.push(x);
+  });
+  var codes=String(f[7]||'').split(';').map(function(c){return parseInt(c,10)});
+  if(labs.length&&labs.length===codes.length)labs.forEach(function(x,k){if(codes[k]>0&&(semCode[x]===undefined||codes[k]<semCode[x]))semCode[x]=codes[k]});
+  var rel=(f[5]||'').trim();
+  relCnt[rel]=(relCnt[rel]||0)+1;
+  labs.forEach(function(x){semCnt[x]=(semCnt[x]||0)+1});
+  out.push({h:head,hn:hn,c:col,cn:norm(col),toks:toks,hi:hi,pn:partners,rel:rel,
+   sem:labs.length?labs:[''],semU:unsure,semAuto:f[6]==='+',ex:f[10]||'',src:f[11]||'',en:f[13]||'',enAuto:f[12]==='+'&&!!f[13]});
+ }
+ out.sort(function(a,b){return collator.compare(a.h,b.h)||collator.compare(a.c,b.c)});
+ rows=out;
+ relKeys=Object.keys(relCnt).sort(function(a,b){if(!a)return 1;if(!b)return -1;return relCnt[b]-relCnt[a]});
+ semKeys=Object.keys(semCnt).sort(function(a,b){return (semCode[a]||99)-(semCode[b]||99)||semCnt[b]-semCnt[a]});
+ buildFacets();
+ update(true);
+}
+
+function buildFacets(){
+ var h='';
+ relKeys.forEach(function(r){
+  var g=relGloss(r);
+  h+='<label class="opt" data-k="'+esc(r)+'"><input type="checkbox" data-f="rel" value="'+esc(r)+'"><span class="nm">'+(r?esc(r):'(празно)')+(g?'<small>'+esc(g)+'</small>':'')+'</span><span class="n"></span></label>';
+ });
+ $('relList').innerHTML=h;
+ h='';
+ semKeys.forEach(function(x){
+  h+='<label class="opt" data-k="'+esc(x)+'"><input type="checkbox" data-f="sem" value="'+esc(x)+'"><span class="nm">'+esc(cap(x))+'</span><span class="n"></span></label>';
+ });
+ h+='<label class="opt" data-k=""><input type="checkbox" data-f="sem" value=""><span class="nm">Без семантичен тип</span><span class="n"></span></label>';
+ $('semList').innerHTML=h;
+}
+
+function terms(s){return norm(s).split(/[\s,;]+/).filter(Boolean)}
+function anyKey(o){for(var k in o)if(o[k])return true;return false}
+
+function update(reset){
+ if(reset)st.shown=PAGE;
+ var ht=terms(st.head),ct=terms(st.comp);
+ var relOn=anyKey(st.rel),semOn=anyKey(st.sem);
+ var rc={},sc={};
+ view=[];
+ for(var i=0;i<rows.length;i++){
+  var r=rows[i];
+  if(ht.length){
+   var ok=false;
+   for(var a=0;a<ht.length;a++)if(r.hn.indexOf(ht[a])===0){ok=true;break}
+   if(!ok)continue;
+  }
+  if(ct.length){
+   var all=true;
+   for(var b=0;b<ct.length&&all;b++){
+    var f=false;
+    for(var p=0;p<r.pn.length;p++)if(r.pn[p].indexOf(ct[b])===0){f=true;break}
+    if(!f)all=false;
+   }
+   if(!all)continue;
+  }
+  var relOk=!relOn||st.rel[r.rel];
+  var semOk=true;
+  if(semOn){semOk=false;for(var s=0;s<r.sem.length;s++)if(st.sem[r.sem[s]]){semOk=true;break}}
+  if(semOk)rc[r.rel]=(rc[r.rel]||0)+1;
+  if(relOk)for(var s2=0;s2<r.sem.length;s2++)sc[r.sem[s2]]=(sc[r.sem[s2]]||0)+1;
+  if(relOk&&semOk)view.push(r);
+ }
+ setCounts('relList',rc);
+ setCounts('semList',sc);
+ render();
+}
+function setCounts(id,c){
+ var labs=$(id).children;
+ for(var i=0;i<labs.length;i++){
+  var k=labs[i].getAttribute('data-k'),n=c[k]||0;
+  labs[i].querySelector('.n').textContent=n.toLocaleString('bg');
+  labs[i].classList.toggle('zero',n===0&&!labs[i].querySelector('input').checked);
+ }
+}
+
+function hl(r){
+ return r.toks.map(function(t,i){return i===r.hi?'<b>'+esc(t)+'</b>':esc(t)}).join(' ');
+}
+function exHtml(r){
+ var e=r.ex;
+ if(!e)return '';
+ var n=norm(e),i=n.length===e.length?n.indexOf(r.cn):-1,h;
+ if(i>-1)h=esc(e.slice(0,i))+'<mark>'+esc(e.slice(i,i+r.cn.length))+'</mark>'+esc(e.slice(i+r.cn.length));
+ else h=esc(e);
+ return '<p class="ex">'+h+(r.src?'<span class="src" title="'+esc(r.src)+'">Източник: '+esc(r.src)+'</span>':'')+'</p>';
+}
+function rowHtml(r){
+ var tags='';
+ if(r.rel)tags+='<span class="tag rel" title="'+esc(relGloss(r.rel))+'">'+esc(r.rel)+'</span>';
+ var named=r.sem.filter(function(x){return x});
+ named.forEach(function(x){tags+='<span class="tag">'+esc(cap(x))+(r.semU?' (?)':'')+'</span>'});
+ if(named.length&&r.semAuto)tags+='<span class="auto" title="Типът е определен автоматично">авт.</span>';
+ return '<li class="r"><div class="main"><span class="col">'+hl(r)+'</span>'+(tags?'<span class="tags">'+tags+'</span>':'')+'</div>'
+  +(r.en?'<div class="en">'+esc(r.en)+(r.enAuto?'<span class="auto" title="Преводът е автоматичен">авт.</span>':'')+'</div>':'')
+  +(r.ex?'<button type="button" class="ex-btn" aria-expanded="false">Пример</button>'+exHtml(r):'')+'</li>';
+}
+function groups(){
+ var g=[],cur=null;
+ for(var i=0;i<view.length;i++){
+  var r=view[i];
+  if(!cur||cur.h!==r.h){cur={h:r.h,rows:[]};g.push(cur)}
+  cur.rows.push(r);
+ }
+ return g;
+}
+function plural(n,one,many){return n.toLocaleString('bg')+' '+(n===1?one:many)}
+function render(){
+ var g=groups(),box=$('results');
+ $('status').textContent=view.length?('Намерени: '+plural(view.length,'колокация','колокации')+' за '+plural(g.length,'основна дума','основни думи')):'Няма намерени колокации';
+ if(!view.length){box.innerHTML='<div class="empty">Няма колокации, които отговарят на търсенето и избраните филтри. Опитайте с по-кратко търсене или махнете някой филтър.</div>';return}
+ var n=Math.min(st.shown,g.length),h='';
+ for(var i=0;i<n;i++){
+  h+='<article class="grp"><h3><span>'+esc(g[i].h)+'</span><span class="cnt">'+plural(g[i].rows.length,'колокация','колокации')+'</span></h3><ul class="rows">'+g[i].rows.map(rowHtml).join('')+'</ul></article>';
+ }
+ if(n<g.length)h+='<button type="button" class="btn sec more" id="more">Покажи още основни думи ('+(g.length-n).toLocaleString('bg')+' останали)</button>';
+ box.innerHTML=h;
+}
+
+function showError(msg){
+ $('status').textContent='Данните не са заредени';
+ $('results').innerHTML='<div class="load" id="loadBox">'+msg+'<br><input type="file" id="fileIn" accept=".tsv,.txt,text/tab-separated-values"></div>';
+}
+function loadFailed(){
+ showError('Данните не можаха да се заредят автоматично (това се случва, когато страницата е отворена директно от компютъра). Изберете ръчно файла <b>noun_collocations_v1.0_mainwords.tsv</b>:');
+}
+
+var timer;
+function onType(){
+ clearTimeout(timer);
+ timer=setTimeout(function(){st.head=$('qHead').value;st.comp=$('qComp').value;if(rows.length)update(true)},120);
+}
+$('qHead').addEventListener('input',onType);
+$('qComp').addEventListener('input',onType);
+$('searchForm').addEventListener('submit',function(e){e.preventDefault()});
+$('reset').addEventListener('click',function(){
+ $('qHead').value='';$('qComp').value='';
+ st.head='';st.comp='';st.rel={};st.sem={};
+ var cb=document.querySelectorAll('.filters input[type=checkbox]');
+ for(var i=0;i<cb.length;i++)cb[i].checked=false;
+ if(rows.length)update(true);
+});
+document.querySelector('.filters').addEventListener('change',function(e){
+ var t=e.target;
+ if(t.type!=='checkbox')return;
+ st[t.getAttribute('data-f')][t.value]=t.checked;
+ update(true);
+});
+document.querySelector('.filters').addEventListener('click',function(e){
+ var k=e.target.getAttribute&&e.target.getAttribute('data-clear');
+ if(!k)return;
+ st[k]={};
+ var cb=document.querySelectorAll('.filters input[data-f="'+k+'"]');
+ for(var i=0;i<cb.length;i++)cb[i].checked=false;
+ update(true);
+});
+$('results').addEventListener('click',function(e){
+ var t=e.target;
+ if(t.id==='more'){st.shown+=PAGE;render();return}
+ if(t.classList&&t.classList.contains('ex-btn')){
+  var li=t.closest('li'),o=li.classList.toggle('open');
+  t.setAttribute('aria-expanded',o);
+ }
+});
+$('results').addEventListener('change',function(e){
+ if(e.target.id!=='fileIn'||!e.target.files[0])return;
+ var fr=new FileReader();
+ fr.onload=function(){init(fr.result)};
+ fr.readAsText(e.target.files[0],'utf-8');
+});
+$('allEx').addEventListener('change',function(){$('results').classList.toggle('showex',this.checked)});
+function toggleInfo(open){
+ $('info').hidden=!open;
+ $('infoBtn').setAttribute('aria-expanded',open);
+ $('infoBtn').textContent=open?'Скрий информацията':'Повече информация';
+}
+$('infoBtn').addEventListener('click',function(){toggleInfo($('info').hidden)});
+$('infoClose').addEventListener('click',function(){toggleInfo(false);$('infoBtn').focus()});
+if(window.matchMedia&&window.matchMedia('(max-width:900px)').matches){
+ $('fRel').removeAttribute('open');$('fSem').removeAttribute('open');
+}
+
+fetch(DATA_URL).then(function(r){
+ if(!r.ok)throw new Error(r.status);
+ return r.arrayBuffer();
+}).then(function(b){init(new TextDecoder('utf-8').decode(b))}).catch(loadFailed);
+})();
+</script>
+</body>
+</html>
