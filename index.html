@@ -56,9 +56,6 @@ details.facet[open] summary::after{content:"▴"}
 .bar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin:0 0 12px}
 .status{font-weight:600}
 .bar label.chk{font-size:15px;display:flex;gap:6px;align-items:center;cursor:pointer}
-.grp{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin:0 0 12px;overflow:hidden}
-.grp h3{margin:0;padding:10px 16px;background:#fafbfc;border-bottom:1px solid var(--line);font:600 20px/1.3 var(--serif);display:flex;align-items:baseline;gap:10px}
-.grp h3 .cnt{font:400 13px var(--sans);color:var(--muted)}
 .rows{list-style:none;margin:0;padding:0}
 .r{padding:9px 16px;border-top:1px solid #eef0f3}
 .r:first-child{border-top:0}
@@ -75,25 +72,46 @@ details.facet[open] summary::after{content:"▴"}
 .r.open .ex,.showex .ex{display:block}
 .ex mark{background:#f6d77a;color:inherit;padding:0 1px;border-radius:2px}
 .ex .src{display:block;color:var(--muted);font-size:12.5px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.more{display:block;margin:8px auto 0}
 .empty,.load{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:24px;text-align:center;color:var(--muted)}
 .load input{margin-top:12px}
-footer{margin-top:24px;color:var(--muted);font-size:14px}
-footer a{color:var(--accent)}
+.actions{margin:0 0 16px;display:flex;flex-wrap:wrap;gap:8px}
+.actions .info-btn{margin:0;padding:10px 14px;font-size:15px}
+.letters-panel{padding:12px 14px}
+.letters{display:flex;flex-wrap:wrap;gap:6px}
+.lt{font:600 15px/1 var(--sans);min-width:34px;padding:8px 6px;border:1px solid var(--line);background:#fff;color:var(--accent);border-radius:6px;cursor:pointer}
+.lt:hover{background:var(--accent-soft)}
+.lt[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.lt:disabled{color:#a7b0bb;background:#f4f5f7;cursor:default}
+.lt.all{padding:8px 12px}
+.tools{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.linkbtn{font:inherit;font-size:15px;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.hw{min-width:0}
+.hw.open{grid-column:1/-1}
+.hw-btn{width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:8px;text-align:left;font:600 17px/1.3 var(--serif);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 12px;cursor:pointer}
+.hw-btn:hover{border-color:var(--accent)}
+.hw-btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.hw.open .hw-btn{background:#fafbfc;border-bottom-left-radius:0;border-bottom-right-radius:0;border-color:var(--accent)}
+.hw-btn .cnt{font:400 13px var(--sans);color:var(--muted);white-space:nowrap}
+.hw-btn::before{content:"▸";color:var(--muted);font:13px var(--sans);margin-right:6px}
+.hw.open .hw-btn::before{content:"▾"}
+.hw-btn .w{flex:1;min-width:0;overflow-wrap:anywhere}
+.hw-panel{background:var(--panel);border:1px solid var(--accent);border-top:0;border-radius:0 0 8px 8px}
 .note{font-size:13.5px;color:var(--muted);margin:12px 0 0}
 @media(max-width:900px){
  .layout{grid-template-columns:minmax(0,1fr)}
  .filters{position:static;max-height:none}
  .search{grid-template-columns:1fr}
 }
-@media(max-width:560px){h1{font-size:25px}.wrap{padding:16px 12px 32px}.panel{padding:16px}.r{padding:9px 12px}.grp h3{padding:10px 12px}}
+@media(max-width:560px){h1{font-size:25px}.wrap{padding:16px 12px 32px}.panel{padding:16px}.r{padding:9px 12px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
 <h1>Справочник на колокациите в българския език с опора съществително име</h1>
-<p class="lead">Колокация е статистически значима комбинация от думи (Саг и др. 2002) или по-просто казано: колокация е последователност или комбинация от думи, които се срещат заедно по-често от обичайното. Данните са в хранилището <a href="https://github.com/DCL-IBL/COLLOCATIONS-BG" target="_blank" rel="noopener noreferrer">DCL-IBL/COLLOCATIONS-BG</a> в GitHub. <button type="button" class="btn sec info-btn" id="infoBtn" aria-expanded="false" aria-controls="info">Повече информация</button></p>
+<p class="lead">Колокация е статистически значима комбинация от думи (Саг и др. 2002), които се срещат заедно по-често от обичайното и която не може да се класифицира като съставна дума или фразеологизъм.</p>
+<p class="actions"><button type="button" class="btn sec info-btn" id="infoBtn" aria-expanded="false" aria-controls="info">Повече информация</button> <a class="btn" href="https://github.com/DCL-IBL/COLLOCATIONS-BG" target="_blank" rel="noopener noreferrer">DCL-IBL/COLLOCATIONS-BG в GitHub</a></p>
 <section class="panel info" id="info" hidden aria-label="Информация за справочника">
 <h2>За справочника</h2>
 <h3>Какво е колокация</h3>
@@ -171,7 +189,6 @@ footer a{color:var(--accent)}
 
 <form class="panel search" id="searchForm" role="search" autocomplete="off">
 <div class="fld"><label for="qHead">Основна дума</label><input type="search" id="qHead" placeholder="напр. абонамент" spellcheck="false"><small>Търси се по началото на думата. Можете да въведете няколко думи, разделени с интервал.</small></div>
-<div class="fld"><label for="qComp">Други компоненти</label><input type="search" id="qComp" placeholder="напр. годишен или за вестник" spellcheck="false"><small>Показват се колокациите, в които има думи, започващи с всяка от въведените.</small></div>
 <div class="fld"><button type="button" class="btn sec" id="reset">Изчисти</button></div>
 </form>
 
@@ -183,25 +200,23 @@ footer a{color:var(--accent)}
 </aside>
 
 <main>
+<div class="panel letters-panel"><div class="letters" id="letters" role="group" aria-label="Първа буква на основната дума"></div></div>
 <div class="bar"><div class="status" id="status" aria-live="polite">Зареждане на данните…</div>
-<label class="chk"><input type="checkbox" id="allEx"> Всички примери</label></div>
+<div class="tools"><label class="chk"><input type="checkbox" id="allEx"> Всички примери</label><button type="button" class="linkbtn" id="collapseAll">Свий всички</button></div></div>
 <div id="results"><div class="load" id="loadBox">Зареждане на данните…</div></div>
 </main>
 </div>
 
-<footer>
-<span>Данни: <a href="https://github.com/DCL-IBL/COLLOCATIONS-BG" target="_blank" rel="noopener noreferrer">DCL-IBL/COLLOCATIONS-BG</a>, версия 1.0</span>
-</footer>
+
 </div>
 
 <script>
 (function(){
 'use strict';
-var DATA_URL='noun_collocations_v1.0_mainwords.tsv';
-var PAGE=40;
+var DATA_URLS=['noun_collocations_v1.0.tsv','https://raw.githubusercontent.com/DCL-IBL/COLLOCATIONS-BG/main/noun_collocations_v1.0.tsv'];
 var collator=new Intl.Collator('bg');
-var rows=[],view=[],relKeys=[],semKeys=[];
-var st={head:'',comp:'',rel:{},sem:{},shown:PAGE};
+var rows=[],view=[],relKeys=[],semKeys=[],groupMap={};
+var st={head:'',letter:'',rel:{},sem:{},open:{}};
 var $=function(id){return document.getElementById(id)};
 
 function norm(s){return String(s||'').toLowerCase().replace(/[̀́]/g,'').replace(/ѐ/g,'е').replace(/ѝ/g,'и')}
@@ -209,11 +224,12 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 function clean(t){return t.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,'')}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 function relGloss(r){
- if(!r)return 'връзката не е означена';
- if(r==='modifies')return 'прилагателно определение';
- if(r==='and/or')return 'съчинителна връзка';
+ if(!r)return 'Връзката не е означена';
+ if(r==='modifies')return 'Съгласувано определение';
+ if(r==='and/or')return 'Съчинителна връзка';
+ if(r==='a_modifier')return 'Приложение';
  var m=/^pp_(.+)$/.exec(r);
- if(m)return 'предложна група с „'+m[1]+'“';
+ if(m)return 'Несъгласувано определение с предложна група (предлог „'+m[1]+'“)';
  return '';
 }
 
@@ -232,7 +248,6 @@ function init(text){
   var tn=toks.map(function(t){return norm(clean(t))});
   var stem=hn.length>=4?hn.slice(0,hn.length-1):hn,hi=tn.indexOf(hn);
   if(hi<0)for(var k=0;k<tn.length;k++)if(tn[k].indexOf(stem)===0){hi=k;break}
-  var partners=tn.filter(function(t,k){return t&&k!==hi});
   /* column I: semantic type label(s); several labels are separated by " / "; "(?)" marks an uncertain assignment */
   var labelText=(f[8]||'').trim(),unsure=/\(\?\)/.test(labelText),labs=[];
   labelText.split(' / ').forEach(function(x){
@@ -244,7 +259,7 @@ function init(text){
   var rel=(f[5]||'').trim();
   relCnt[rel]=(relCnt[rel]||0)+1;
   labs.forEach(function(x){semCnt[x]=(semCnt[x]||0)+1});
-  out.push({h:head,hn:hn,c:col,cn:norm(col),toks:toks,hi:hi,pn:partners,rel:rel,
+  out.push({h:head,hn:hn,L:hn.charAt(0).toUpperCase(),c:col,cn:norm(col),toks:toks,hi:hi,rel:rel,
    sem:labs.length?labs:[''],semU:unsure,semAuto:f[6]==='+',ex:f[10]||'',src:f[11]||'',en:f[13]||'',enAuto:f[12]==='+'&&!!f[13]});
  }
  out.sort(function(a,b){return collator.compare(a.h,b.h)||collator.compare(a.c,b.c)});
@@ -252,14 +267,14 @@ function init(text){
  relKeys=Object.keys(relCnt).sort(function(a,b){if(!a)return 1;if(!b)return -1;return relCnt[b]-relCnt[a]});
  semKeys=Object.keys(semCnt).sort(function(a,b){return (semCode[a]||99)-(semCode[b]||99)||semCnt[b]-semCnt[a]});
  buildFacets();
- update(true);
+ buildLetters();
+ update();
 }
 
 function buildFacets(){
  var h='';
  relKeys.forEach(function(r){
-  var g=relGloss(r);
-  h+='<label class="opt" data-k="'+esc(r)+'"><input type="checkbox" data-f="rel" value="'+esc(r)+'"><span class="nm">'+(r?esc(r):'(празно)')+(g?'<small>'+esc(g)+'</small>':'')+'</span><span class="n"></span></label>';
+  h+='<label class="opt" data-k="'+esc(r)+'"><input type="checkbox" data-f="rel" value="'+esc(r)+'"><span class="nm">'+(r?esc(r):'(празно)')+'<small>'+esc(relGloss(r))+'</small></span><span class="n"></span></label>';
  });
  $('relList').innerHTML=h;
  h='';
@@ -269,15 +284,22 @@ function buildFacets(){
  h+='<label class="opt" data-k=""><input type="checkbox" data-f="sem" value=""><span class="nm">Без семантичен тип</span><span class="n"></span></label>';
  $('semList').innerHTML=h;
 }
+function buildLetters(){
+ var seen={},ls=[];
+ rows.forEach(function(r){if(!seen[r.L]){seen[r.L]=1;ls.push(r.L)}});
+ ls.sort(function(a,b){return collator.compare(a,b)});
+ var h='<button type="button" class="lt all" data-l="" aria-pressed="true">Всички</button>';
+ ls.forEach(function(L){h+='<button type="button" class="lt" data-l="'+esc(L)+'" aria-pressed="false">'+esc(L)+'</button>'});
+ $('letters').innerHTML=h;
+}
 
 function terms(s){return norm(s).split(/[\s,;]+/).filter(Boolean)}
 function anyKey(o){for(var k in o)if(o[k])return true;return false}
 
-function update(reset){
- if(reset)st.shown=PAGE;
- var ht=terms(st.head),ct=terms(st.comp);
+function update(){
+ var ht=terms(st.head);
  var relOn=anyKey(st.rel),semOn=anyKey(st.sem);
- var rc={},sc={};
+ var rc={},sc={},lc={},lastL='';
  view=[];
  for(var i=0;i<rows.length;i++){
   var r=rows[i];
@@ -286,24 +308,21 @@ function update(reset){
    for(var a=0;a<ht.length;a++)if(r.hn.indexOf(ht[a])===0){ok=true;break}
    if(!ok)continue;
   }
-  if(ct.length){
-   var all=true;
-   for(var b=0;b<ct.length&&all;b++){
-    var f=false;
-    for(var p=0;p<r.pn.length;p++)if(r.pn[p].indexOf(ct[b])===0){f=true;break}
-    if(!f)all=false;
-   }
-   if(!all)continue;
-  }
   var relOk=!relOn||st.rel[r.rel];
   var semOk=true;
   if(semOn){semOk=false;for(var s=0;s<r.sem.length;s++)if(st.sem[r.sem[s]]){semOk=true;break}}
-  if(semOk)rc[r.rel]=(rc[r.rel]||0)+1;
-  if(relOk)for(var s2=0;s2<r.sem.length;s2++)sc[r.sem[s2]]=(sc[r.sem[s2]]||0)+1;
-  if(relOk&&semOk)view.push(r);
+  if(!st.letter||r.L===st.letter){
+   if(semOk)rc[r.rel]=(rc[r.rel]||0)+1;
+   if(relOk)for(var s2=0;s2<r.sem.length;s2++)sc[r.sem[s2]]=(sc[r.sem[s2]]||0)+1;
+  }
+  if(relOk&&semOk){
+   if(r.h!==lastL){lastL=r.h;lc[r.L]=(lc[r.L]||0)+1}
+   if(!st.letter||r.L===st.letter)view.push(r);
+  }
  }
  setCounts('relList',rc);
  setCounts('semList',sc);
+ setLetters(lc);
  render();
 }
 function setCounts(id,c){
@@ -312,6 +331,14 @@ function setCounts(id,c){
   var k=labs[i].getAttribute('data-k'),n=c[k]||0;
   labs[i].querySelector('.n').textContent=n.toLocaleString('bg');
   labs[i].classList.toggle('zero',n===0&&!labs[i].querySelector('input').checked);
+ }
+}
+function setLetters(lc){
+ var b=$('letters').children;
+ for(var i=0;i<b.length;i++){
+  var L=b[i].getAttribute('data-l');
+  b[i].setAttribute('aria-pressed',L===st.letter);
+  if(L){var n=lc[L]||0;b[i].disabled=n===0&&L!==st.letter;b[i].title=n.toLocaleString('bg')+' основни думи'}
  }
 }
 
@@ -336,56 +363,53 @@ function rowHtml(r){
   +(r.en?'<div class="en">'+esc(r.en)+(r.enAuto?'<span class="auto" title="Преводът е автоматичен">авт.</span>':'')+'</div>':'')
   +(r.ex?'<button type="button" class="ex-btn" aria-expanded="false">Пример</button>'+exHtml(r):'')+'</li>';
 }
-function groups(){
- var g=[],cur=null;
+function plural(n,one,many){return n.toLocaleString('bg')+' '+(n===1?one:many)}
+function itemHtml(g){
+ var open=!!st.open[g.h];
+ return '<div class="hw'+(open?' open':'')+'" data-h="'+esc(g.h)+'"><button type="button" class="hw-btn" aria-expanded="'+open+'"><span class="w">'+esc(g.h)+'</span><span class="cnt">'+g.rows.length.toLocaleString('bg')+'</span></button>'
+  +(open?'<div class="hw-panel"><ul class="rows">'+g.rows.map(rowHtml).join('')+'</ul></div>':'')+'</div>';
+}
+function render(){
+ var gs=[],cur=null;
+ groupMap={};
  for(var i=0;i<view.length;i++){
   var r=view[i];
-  if(!cur||cur.h!==r.h){cur={h:r.h,rows:[]};g.push(cur)}
+  if(!cur||cur.h!==r.h){cur={h:r.h,rows:[]};gs.push(cur);groupMap[r.h]=cur}
   cur.rows.push(r);
  }
- return g;
-}
-function plural(n,one,many){return n.toLocaleString('bg')+' '+(n===1?one:many)}
-function render(){
- var g=groups(),box=$('results');
- $('status').textContent=view.length?('Намерени: '+plural(view.length,'колокация','колокации')+' за '+plural(g.length,'основна дума','основни думи')):'Няма намерени колокации';
- if(!view.length){box.innerHTML='<div class="empty">Няма колокации, които отговарят на търсенето и избраните филтри. Опитайте с по-кратко търсене или махнете някой филтър.</div>';return}
- var n=Math.min(st.shown,g.length),h='';
- for(var i=0;i<n;i++){
-  h+='<article class="grp"><h3><span>'+esc(g[i].h)+'</span><span class="cnt">'+plural(g[i].rows.length,'колокация','колокации')+'</span></h3><ul class="rows">'+g[i].rows.map(rowHtml).join('')+'</ul></article>';
- }
- if(n<g.length)h+='<button type="button" class="btn sec more" id="more">Покажи още основни думи ('+(g.length-n).toLocaleString('bg')+' останали)</button>';
- box.innerHTML=h;
+ $('status').textContent=view.length?('Основни думи: '+gs.length.toLocaleString('bg')+' · колокации: '+view.length.toLocaleString('bg')):'Няма намерени основни думи';
+ var box=$('results');
+ if(!view.length){box.innerHTML='<div class="empty">Няма основни думи, които отговарят на търсенето и избраните филтри. Опитайте с по-кратко търсене или махнете някой филтър.</div>';return}
+ box.innerHTML='<div class="words">'+gs.map(itemHtml).join('')+'</div>';
 }
 
 function showError(msg){
- $('status').textContent='Данните не са заредени';
+ $('status').textContent='';
  $('results').innerHTML='<div class="load" id="loadBox">'+msg+'<br><input type="file" id="fileIn" accept=".tsv,.txt,text/tab-separated-values"></div>';
 }
 function loadFailed(){
- showError('Данните не можаха да се заредят автоматично (това се случва, когато страницата е отворена директно от компютъра). Изберете ръчно файла <b>noun_collocations_v1.0_mainwords.tsv</b>:');
+ showError('Данните не можаха да се заредят автоматично. Изберете ръчно файла <b>noun_collocations_v1.0.tsv</b>:');
 }
 
 var timer;
 function onType(){
  clearTimeout(timer);
- timer=setTimeout(function(){st.head=$('qHead').value;st.comp=$('qComp').value;if(rows.length)update(true)},120);
+ timer=setTimeout(function(){st.head=$('qHead').value;if(rows.length)update()},120);
 }
 $('qHead').addEventListener('input',onType);
-$('qComp').addEventListener('input',onType);
 $('searchForm').addEventListener('submit',function(e){e.preventDefault()});
 $('reset').addEventListener('click',function(){
- $('qHead').value='';$('qComp').value='';
- st.head='';st.comp='';st.rel={};st.sem={};
+ $('qHead').value='';
+ st.head='';st.letter='';st.rel={};st.sem={};st.open={};
  var cb=document.querySelectorAll('.filters input[type=checkbox]');
  for(var i=0;i<cb.length;i++)cb[i].checked=false;
- if(rows.length)update(true);
+ if(rows.length)update();
 });
 document.querySelector('.filters').addEventListener('change',function(e){
  var t=e.target;
  if(t.type!=='checkbox')return;
  st[t.getAttribute('data-f')][t.value]=t.checked;
- update(true);
+ update();
 });
 document.querySelector('.filters').addEventListener('click',function(e){
  var k=e.target.getAttribute&&e.target.getAttribute('data-clear');
@@ -393,11 +417,27 @@ document.querySelector('.filters').addEventListener('click',function(e){
  st[k]={};
  var cb=document.querySelectorAll('.filters input[data-f="'+k+'"]');
  for(var i=0;i<cb.length;i++)cb[i].checked=false;
- update(true);
+ update();
+});
+$('letters').addEventListener('click',function(e){
+ var b=e.target.closest&&e.target.closest('button');
+ if(!b||b.disabled)return;
+ st.letter=b.getAttribute('data-l');
+ update();
 });
 $('results').addEventListener('click',function(e){
  var t=e.target;
- if(t.id==='more'){st.shown+=PAGE;render();return}
+ var hb=t.closest&&t.closest('.hw-btn');
+ if(hb){
+  var item=hb.parentNode,h=item.getAttribute('data-h');
+  st.open[h]=!st.open[h];
+  var tmp=document.createElement('div');
+  tmp.innerHTML=itemHtml(groupMap[h]);
+  item.parentNode.replaceChild(tmp.firstChild,item);
+  var nb=$('results').querySelector('.hw[data-h="'+h.replace(/"/g,'\\"')+'"] .hw-btn');
+  if(nb)nb.focus();
+  return;
+ }
  if(t.classList&&t.classList.contains('ex-btn')){
   var li=t.closest('li'),o=li.classList.toggle('open');
   t.setAttribute('aria-expanded',o);
@@ -410,6 +450,7 @@ $('results').addEventListener('change',function(e){
  fr.readAsText(e.target.files[0],'utf-8');
 });
 $('allEx').addEventListener('change',function(){$('results').classList.toggle('showex',this.checked)});
+$('collapseAll').addEventListener('click',function(){st.open={};if(rows.length)render()});
 function toggleInfo(open){
  $('info').hidden=!open;
  $('infoBtn').setAttribute('aria-expanded',open);
@@ -421,10 +462,14 @@ if(window.matchMedia&&window.matchMedia('(max-width:900px)').matches){
  $('fRel').removeAttribute('open');$('fSem').removeAttribute('open');
 }
 
-fetch(DATA_URL).then(function(r){
- if(!r.ok)throw new Error(r.status);
- return r.arrayBuffer();
-}).then(function(b){init(new TextDecoder('utf-8').decode(b))}).catch(loadFailed);
+function load(k){
+ if(k>=DATA_URLS.length){loadFailed();return}
+ fetch(DATA_URLS[k]).then(function(r){
+  if(!r.ok)throw new Error(r.status);
+  return r.arrayBuffer();
+ }).then(function(b){init(new TextDecoder('utf-8').decode(b))}).catch(function(){load(k+1)});
+}
+load(0);
 })();
 </script>
 </body>
